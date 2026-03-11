@@ -15,6 +15,9 @@ public class Custom {
 }
 
 //自定义异常
+//一般情况下，我们自定义异常是继承RuntimeException
+//即把自定义异常做成 运行时异常，好处时，我们可以使用默认的处理机制
+//比较方便
 class Ageexception extends RuntimeException {
     public Ageexception(String message) {
         super(message);
