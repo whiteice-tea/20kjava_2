@@ -7,7 +7,7 @@ package tankgame;
 public class Tank {
     private int x;
     private int y;
-
+    private int direction;
     public Tank(int x, int y) {
         this.x = x;
         this.y = y;
@@ -27,5 +27,13 @@ public class Tank {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 }

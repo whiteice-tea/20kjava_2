@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Vector;
 
 /**
  * @author whiteicetea
@@ -12,13 +13,30 @@ import java.awt.event.KeyListener;
 public class MyPanel  extends JPanel implements KeyListener {
     //定义我的坦克
     Hero hero=null;
+
+    Vector<EnemyTank> enemyTanks = new Vector<>();
+
+    int enemytankssize=3;
+
+
+
     //坦克坐标
-    int x=100;
-    int y=100;
+    int x=300;
+    int y=300;
+
+    //
     int direction=0;
+
+
 
     public MyPanel() {
         hero = new Hero(x,y);
+
+        for(int i=0;i<enemytankssize;i++){
+            EnemyTank enemyTank = new EnemyTank(100 * (i + 1), 0);
+            enemyTank.setDirection(2);
+            enemyTanks.add(enemyTank);
+        }
     }
 
 
@@ -27,7 +45,13 @@ public class MyPanel  extends JPanel implements KeyListener {
         super.paint(g);
         g.fillRect(0,0,1000,750);//填充矩形，默认黑色
         //画出的坦克-封装方法
-        drawTank(x, y, g,direction,0);
+        drawTank(hero.getX(), hero.getY(), g, hero.getDirection(), 0);
+
+        //画出敌人坦克
+        for(int i=0;i<enemyTanks.size();i++){
+            EnemyTank et =enemyTanks.get(i);
+            drawTank(et.getX(),et.getY(),g,et.getDirection(),1);
+        }
     }
 
     public void  drawTank(int x,int y,Graphics g,int direction,int type){
@@ -87,17 +111,17 @@ public class MyPanel  extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_S){
-            y+=3;
-            direction = 2;
+            hero.setY(hero.getY() + 3);
+            hero.setDirection(2);
         } else if(e.getKeyCode() == KeyEvent.VK_W){
-            y-=3;
-            direction = 0;
+            hero.setY(hero.getY() - 3);
+            hero.setDirection(0);
         } else if(e.getKeyCode() == KeyEvent.VK_A){
-            x-=3;
-            direction = 3;
+            hero.setX(hero.getX() - 3);
+            hero.setDirection(3);
         } else if(e.getKeyCode() == KeyEvent.VK_D){
-            x+=3;
-            direction = 1;
+            hero.setX(hero.getX() + 3);
+            hero.setDirection(1);
         }
 
         this.repaint();
